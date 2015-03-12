@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  
   factory :user do
-    
+    sequence(:email)  { |n| "user#{n}@example.com" }
+    password           "password"
+    age               { rand(10...20) }
+    plan              {["bronze", "silver", "gold"].sample}
   end
 
 end
