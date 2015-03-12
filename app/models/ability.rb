@@ -6,5 +6,6 @@ class Ability
 
     can :stream, :all
     can :checkout, :all
+    can :checkin, :all
   end
 end

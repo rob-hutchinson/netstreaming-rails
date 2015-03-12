@@ -89,7 +89,7 @@ describe MoviesController do
   end
 
 
-  it "allows a user to check out a film" do
+  fit "allows a user to check out a film" do
     movie = FactoryGirl.create :movie, rating: "G"
     user = FactoryGirl.create :user
     
@@ -97,12 +97,9 @@ describe MoviesController do
 
    post :checkout, movie_id: movie.id
    expect(response.code.to_i).to eq 200
-   # binding.pry
-   # user.reload
-   # binding.pry
-   # logout user
-   # login user
-   # expect(user.currently_rented).to eq 1
+   user.reload
+
+   expect(user.currently_rented).to eq 1
    expect(user.movies.first.id).to eq movie.id
   end
 
@@ -148,18 +145,34 @@ describe MoviesController do
     expect(user.currently_rented).to eq 3
   end
 
-  # it "checks out a film for unfull silver plan" do
-  #   movie = FactoryGirl.create :movie
-  #   user = FactoryGirl.create :user, age: 20, plan: "silver", currently_rented: 2
+  it "checks out a film for unfull silver plan" do
+    movie = FactoryGirl.create :movie
+    user = FactoryGirl.create :user, age: 20, plan: "silver", currently_rented: 2
 
-  #   login user
+    login user
 
-  #   post :checkout, movie_id: movie.id
-  #   expect(response.code.to_i).to eq 200
-  #   expect(user.currently_rented).to eq 3
-  # end
+    post :checkout, movie_id: movie.id
+    expect(response.code.to_i).to eq 200
+    user.reload
+    expect(user.currently_rented).to eq 3
+  end
 
-  it "allows a user to check in a film"
+  it "allows a user to check in a film" do
+    movie = FactoryGirl.create :movie
+    user = FactoryGirl.create :user, age:20, plan: "gold", currently_rented: 4
+
+    login user
+    user.checkout movie
+    expect(user.movies.count).to eq 1
+    expect(user.currently_rented).to eq 5
+
+    post :checkin, movie_id: movie.id
+  
+    expect(response.code.to_i).to eq 200
+    user.reload
+    expect(user.movies.count).to eq 0
+    expect(user.currently_rented).to eq 4
+  end
 
 
 end
