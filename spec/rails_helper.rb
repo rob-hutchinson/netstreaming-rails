@@ -47,4 +47,23 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.include Devise::TestHelpers, type: :controller
+
+  module ExtraTestHelpers
+    def login user
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      sign_in user
+    end
+
+    def logout user
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      sign_out user
+    end
+
+    def response_json
+      JSON.parse response.body
+    end
+  end
+  config.include ExtraTestHelpers
 end

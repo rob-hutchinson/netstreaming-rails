@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   root to: "movies#index"
-
-  resources :movies, only: [:index]
+ 
+  post 'movies/:movie_id/stream' => 'movies#stream'
+  
 end
