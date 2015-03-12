@@ -1,0 +1,1 @@
+json.(@movie, :title, :rating, :plot)

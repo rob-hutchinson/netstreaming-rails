@@ -4,8 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    if user.plan == "silver" || user.plan == "gold"
-      can :stream, :all
-    end
+    can :stream, :all
+    can :checkout, :all
   end
 end
