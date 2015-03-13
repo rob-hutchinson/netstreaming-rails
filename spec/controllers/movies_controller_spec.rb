@@ -1,5 +1,7 @@
 require 'simplecov'
 SimpleCov.start
+require 'coveralls'
+Coveralls.wear!('rails')
 require 'rails_helper'
 
 describe MoviesController do

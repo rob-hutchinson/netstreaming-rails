@@ -13,6 +13,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'cancancan'
 gem 'simplecov', :require => false, :group => :test
+gem 'coveralls', require: false
 
 group :development, :test do
   gem 'better_errors'
