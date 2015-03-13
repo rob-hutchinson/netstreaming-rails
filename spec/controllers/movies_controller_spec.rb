@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'rails_helper'
 
 describe MoviesController do
@@ -50,7 +52,8 @@ describe MoviesController do
     movie_r = FactoryGirl.create :movie, title: "R Movie", rating: "R"
     movie_g = FactoryGirl.create :movie, title: "G Movie", rating: "G"
     movie_pg13 = FactoryGirl.create :movie, title: "PG-13 Movie", rating: "PG-13"
-  
+    movie_nc17 = FactoryGirl.create :movie, title: "NC-17 Movie", rating: "NC-17"
+
     user_10 = FactoryGirl.create :user, age: 10, plan: "gold"
     user_13 = FactoryGirl.create :user, age: 13, plan: "gold"
     user_17 = FactoryGirl.create :user, age: 17, plan: "gold"
@@ -59,6 +62,8 @@ describe MoviesController do
     post :stream, movie_id: movie_r.id
     expect(response.code.to_i).to eq 302
     post :stream, movie_id: movie_pg13.id
+    expect(response.code.to_i).to eq 302
+    post :stream, movie_id: movie_nc17.id
     expect(response.code.to_i).to eq 302
     post :stream, movie_id: movie_g.id
     expect(response.code.to_i).to eq 200
